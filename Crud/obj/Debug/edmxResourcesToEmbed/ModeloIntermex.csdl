@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IntermexModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Categorias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Revistas" Relationship="Self.FK_Revistas_Categorias" FromRole="Categorias" ToRole="Revistas" />
+  </EntityType>
+  <EntityType Name="Revistas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Titulo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Edicion" Type="Int32" />
+    <Property Name="Codigo_barras" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Fecha_Publicacion" Type="DateTime" Precision="0" />
+    <Property Name="Precio" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Activo" Type="Boolean" />
+    <Property Name="Categorias_Id" Type="Int32" />
+    <Property Name="Fecha_Actualizacion" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Categorias" Relationship="Self.FK_Revistas_Categorias" FromRole="Revistas" ToRole="Categorias" />
+  </EntityType>
+  <Association Name="FK_Revistas_Categorias">
+    <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+    <End Role="Revistas" Type="Self.Revistas" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Categorias">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Revistas">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="IntermexEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categorias" EntityType="Self.Categorias" />
+    <EntitySet Name="Revistas" EntityType="Self.Revistas" />
+    <AssociationSet Name="FK_Revistas_Categorias" Association="Self.FK_Revistas_Categorias">
+      <End Role="Categorias" EntitySet="Categorias" />
+      <End Role="Revistas" EntitySet="Revistas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IntermexModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Categorias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Revistas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Titulo" Type="text" />
+    <Property Name="Edicion" Type="int" />
+    <Property Name="Codigo_barras" Type="nchar" MaxLength="10" />
+    <Property Name="Fecha_Publicacion" Type="date" />
+    <Property Name="Precio" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Activo" Type="bit" />
+    <Property Name="Categorias_Id" Type="int" />
+    <Property Name="Fecha_Actualizacion" Type="date" />
+  </EntityType>
+  <Association Name="FK_Categorias">
+    <End Role="Revistas" Type="Self.Revistas" Multiplicity="1" />
+    <End Role="Categorias" Type="Self.Categorias" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Revistas">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Categorias">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="IntermexModelStoreContainer">
+    <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Revistas" EntityType="Self.Revistas" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Categorias" Association="Self.FK_Categorias">
+      <End Role="Revistas" EntitySet="Revistas" />
+      <End Role="Categorias" EntitySet="Categorias" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
